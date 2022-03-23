@@ -4,6 +4,7 @@
 
 from dataclasses import dataclass
 from datetime import date
+from os import environ
 
 import scrapy
 
@@ -34,13 +35,11 @@ class IradoNextCollectionDates:
 class IradoSpider(scrapy.Spider):
     name = 'IradoSpider'
 
-    def __init__(self, zipcode, zipcode_suffix,
-                 housenumber, housenumber_suffix=None,
-                 *args, **kwargs):
-        self.zipcode = zipcode
-        self.zipcode_suffix = zipcode_suffix
-        self.housenumber = housenumber
-        self.housenumber_suffix = housenumber_suffix or ""
+    def __init__(self, *args, **kwargs):
+        self.zipcode = environ['IRADO_ZIPCODE']
+        self.zipcode_suffix = environ['IRADO_ZIPCODE_SUFFIX']
+        self.housenumber = environ['IRADO_HOUSENUMBER']
+        self.housenumber_suffix = environ.get('IRADO_HOUSENUMBER_SUFFIX', '')
         self.wsa_calendar = "587d45d7c9"
 
     def start_requests(self):

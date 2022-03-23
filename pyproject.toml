@@ -4,12 +4,13 @@ version = "0.1.0"
 description = "Scrapy spider for Irado collection dates, exporting to Home Assistant over MQTT"
 authors = ["Maruno Ulfdrengr"]
 license = "MPL-2.0"
+packages = [
+    {include = "irado_scrapy"}
+]
 
 [tool.poetry.dependencies]
 python = "^3.9"
 Scrapy = "^2.5.1"
-attrs = "^21.4.0"
-cattrs = "^1.10.0"
 asyncio-mqtt = "^0.12.1"
 
 [tool.poetry.dev-dependencies]
