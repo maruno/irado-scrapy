@@ -37,16 +37,19 @@ class HassMQTTDiscoveryOnOpen:
                                      'name': 'Irado GFT',
                                      'device_class': 'date',
                                      'state_topic': 'irado_scrapy/gft'
-                                 }))
+                                 }),
+                                 retain=True)
             await client.publish('homeassistant/sensor/irado_pmd/config',
                                  json.dumps({
                                      'name': 'Irado PMD',
                                      'device_class': 'date',
                                      'state_topic': 'irado_scrapy/pmd'
-                                 }))
+                                 }),
+                                 retain=True)
             await client.publish('homeassistant/sensor/irado_papier/config',
                                  json.dumps({
                                      'name': 'Irado papier',
                                      'device_class': 'date',
                                      'state_topic': 'irado_scrapy/papier'
-                                 }))
+                                 }),
+                                 retain=True)

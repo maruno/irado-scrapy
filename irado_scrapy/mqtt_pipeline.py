@@ -23,9 +23,12 @@ class IradoMQTTPipeline:
                           password=environ.get('MQTT_PASSWORD'),
                           tls_context=tls_context) as client:
             await client.publish('irado_scrapy/gft',
-                                item.gft.isoformat())
+                                item.gft.isoformat(),
+                                retain=True)
             await client.publish('irado_scrapy/pmd',
-                                item.pmd.isoformat())
+                                item.pmd.isoformat(),
+                                retain=True)
             await client.publish('irado_scrapy/papier',
-                                item.papier.isoformat())
+                                item.papier.isoformat(),
+                                retain=True)
 
