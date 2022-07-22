@@ -12,4 +12,6 @@ COPY irado_scrapy /app/irado_scrapy
 
 RUN poetry install
 
+ENV PYTHONPATH=/app/
+ENV SCRAPY_SETTINGS_MODULE=irado_scrapy.settings
 CMD poetry run scrapy runspider irado_scrapy/spider.py
