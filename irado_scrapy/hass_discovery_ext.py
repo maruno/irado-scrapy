@@ -8,7 +8,7 @@ from distutils.util import strtobool
 from os import environ
 from ssl import create_default_context
 
-from asyncio_mqtt import Client
+from aiomqtt import Client
 from scrapy import signals
 
 class HassMQTTDiscoveryOnOpen:

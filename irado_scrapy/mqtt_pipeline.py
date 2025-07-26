@@ -7,7 +7,7 @@ from distutils.util import strtobool
 from os import environ
 from ssl import create_default_context
 
-from asyncio_mqtt import Client
+from aiomqtt import Client
 
 class IradoMQTTPipeline:
     async def process_item(self, item, spider):
