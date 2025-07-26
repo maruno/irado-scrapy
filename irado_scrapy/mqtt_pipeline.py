@@ -25,8 +25,8 @@ class IradoMQTTPipeline:
             await client.publish('irado_scrapy/gft',
                                 item.gft.isoformat(),
                                 retain=True)
-            await client.publish('irado_scrapy/pmd',
-                                item.pmd.isoformat(),
+            await client.publish('irado_scrapy/rest',
+                                item.rest.isoformat(),
                                 retain=True)
             await client.publish('irado_scrapy/papier',
                                 item.papier.isoformat(),

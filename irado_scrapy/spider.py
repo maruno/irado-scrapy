@@ -28,7 +28,7 @@ def parse_dutch_date(raw_date):
 @dataclass
 class IradoNextCollectionDates:
     gft: date
-    pmd: date
+    rest: date
     papier: date
 
 
@@ -59,12 +59,12 @@ class IradoSpider(scrapy.Spider):
 
     def parse(self, response):
         next_gft_raw = response.css('.avk-block-row.pickup-type-item-gft::text').get().strip()
-        next_pmd_raw = response.css('.avk-block-row.pickup-type-item-kunststof::text').get().strip()
+        next_rest_raw = response.css('.avk-block-row.pickup-type-item-rest::text').get().strip()
         next_papier_raw = response.css('.avk-block-row.pickup-type-item-papier::text').get().strip()
-        self.logger.debug('GFT? %s PMD? %s papier? %s', next_gft_raw, next_pmd_raw, next_papier_raw)
+        self.logger.debug('GFT? %s Rest? %s papier? %s', next_gft_raw, next_rest_raw, next_papier_raw)
 
         return IradoNextCollectionDates(parse_dutch_date(next_gft_raw),
-                                        parse_dutch_date(next_pmd_raw),
+                                        parse_dutch_date(next_rest_raw),
                                         parse_dutch_date(next_papier_raw))
 
 
