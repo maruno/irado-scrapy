@@ -4,7 +4,9 @@ RUN apt-get install ca-certificates && apt-get clean
 
 RUN mkdir /app
 WORKDIR /app
-RUN pip install poetry
+RUN pip install poetry \
+    && poetry config virtualenvs.create true --local \
+    && poetry config virtualenvs.in-project true --local
 
 COPY poetry.lock /app/poetry.lock
 COPY pyproject.toml /app/pyproject.toml 
