@@ -1,0 +1,52 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: irado-scrapy-daily
+  namespace: scrapy
+  labels:
+    app: irado-scrapy-daily
+    app.kubernetes.io/name: irado-scrapy-daily
+spec:
+  concurrencyPolicy: Forbid
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    metadata:
+      labels:
+        app: irado-scrapy-daily
+        app.kubernetes.io/name: irado-scrapy-daily
+    spec:
+      template:
+        metadata:
+          labels:
+            app: irado-scrapy-daily
+            app.kubernetes.io/name: irado-scrapy-daily
+        spec:
+          automountServiceAccountToken: true
+          containers:
+          - image: ghcr.io/maruno/irado-scrapy:latest
+            imagePullPolicy: IfNotPresent
+            name: irado-scrapy
+            envFrom:
+            - configMapRef:
+                name: irado-scrapy-config
+                optional: false
+            resources:
+              limits:
+                memory: 128Mi
+              requests:
+                cpu: 100m
+                memory: 128Mi
+            livenessProbe:
+              exec:
+                command:
+                  - /bin/true
+            readinessProbe:
+              exec:
+                command:
+                  - /bin/true
+            securityContext:
+              readOnlyRootFilesystem: true
+              runAsUser: 1001
+          restartPolicy: Never
+  schedule: 0 3 * * *
+  successfulJobsHistoryLimit: 3
