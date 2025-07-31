@@ -22,7 +22,7 @@ The service can be run as a container using image `ghcr.io/maruno/irado-scrapy:l
 ### Docker container
 To pass the configuration simply feed the config using the above mentioned environment variables
 to docker using an env-file:
-`docker run -ti --env-file env.list ghcr.io/maruno/irado-scrapy:latest`
+`docker run -ti --env-file env.list --read-only ghcr.io/maruno/irado-scrapy:latest`
 
 ### K8s CronJob
 An example CronJob can be found in the `k8s`-folder using the docker image. Just provide
