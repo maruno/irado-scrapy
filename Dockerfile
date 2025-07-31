@@ -5,15 +5,15 @@ RUN apt-get install ca-certificates && apt-get clean
 RUN mkdir /app
 WORKDIR /app
 RUN pip install poetry \
-    && poetry config virtualenvs.create true --local \
-    && poetry config virtualenvs.in-project true --local
+    && poetry config virtualenvs.create false
 
 COPY poetry.lock /app/poetry.lock
-COPY pyproject.toml /app/pyproject.toml 
+COPY pyproject.toml /app/pyproject.toml
 COPY irado_scrapy /app/irado_scrapy
 
 RUN poetry install
 
 ENV PYTHONPATH=/app/
 ENV SCRAPY_SETTINGS_MODULE=irado_scrapy.settings
-CMD poetry run scrapy runspider irado_scrapy/spider.py
+
+CMD ["python", "-m", "scrapy", "runspider", "irado_scrapy/spider.py"]
