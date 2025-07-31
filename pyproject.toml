@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "irado-scrapy"
-version = "0.1.1"
+version = "0.1.2"
 description = "Scrapy spider for Irado collection dates, exporting to Home Assistant over MQTT"
 authors = ["Maruno Ulfdrengr"]
 license = "MPL-2.0"
