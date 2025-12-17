@@ -40,21 +40,20 @@ class IradoSpider(scrapy.Spider):
         self.zipcode_suffix = environ['IRADO_ZIPCODE_SUFFIX']
         self.housenumber = environ['IRADO_HOUSENUMBER']
         self.housenumber_suffix = environ.get('IRADO_HOUSENUMBER_SUFFIX', '')
-        self.wsa_calendar = "587d45d7c9"
+        self.wsa_calendar = "bb7addd20d"
 
-    def start_requests(self):
-        return (
-            scrapy.FormRequest(
-                "https://www.irado.nl/afvalkalender",
-                formdata={
-                    'appointment_zipcode': self.zipcode,
-                    'appointment_zipcode_suffix': self.zipcode_suffix,
-                    'appointment_housenumber': self.housenumber,
-                    'appointment_housenumber_suffix': self.housenumber_suffix,
-                    'wsa_calendar': self.wsa_calendar
-                },
-                callback=self.parse
-            ),
+    async def start(self):
+        yield scrapy.FormRequest(
+            "https://www.irado.nl/afvalkalender",
+            formdata={
+                'appointment_zipcode': self.zipcode,
+                'appointment_zipcode_suffix': self.zipcode_suffix,
+                'appointment_housenumber': self.housenumber,
+                'appointment_housenumber_suffix': self.housenumber_suffix,
+                'wsa_calendar': self.wsa_calendar,
+                '_wp_http_referer': '/afvalkalender'
+            },
+            callback=self.parse
         )
 
     def parse(self, response):
