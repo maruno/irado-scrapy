@@ -8,23 +8,6 @@ from os import environ
 
 import scrapy
 
-DUTCH_MONTHS = ['januari', 'februari', 'maart', 'april', 'mei', 'juni', 'juli',
-                'augustus', 'september', 'oktober', 'november', 'december']
-
-
-def parse_dutch_date(raw_date):
-    _, day_raw, month_raw = raw_date.split()
-    day = int(day_raw)
-    month = DUTCH_MONTHS.index(month_raw) + 1
-
-    today = date.today()
-    year = today.year
-    if today.month == 12 and month != 12:
-        year += 1
-
-    return date(year, month, day)
-
-
 @dataclass
 class IradoNextCollectionDates:
     gft: date
@@ -57,13 +40,13 @@ class IradoSpider(scrapy.Spider):
         )
 
     def parse(self, response):
-        next_gft_raw = response.css('.avk-block-row.pickup-type-item-gft::text').get().strip()
-        next_rest_raw = response.css('.avk-block-row.pickup-type-item-rest::text').get().strip()
-        next_papier_raw = response.css('.avk-block-row.pickup-type-item-papier::text').get().strip()
+        next_gft_raw = response.css('.avk-block-row.pickup-type-item.pickup-type-item-gft.active').xpath("./time/@datetime").get().strip()
+        next_rest_raw = response.css('.avk-block-row.pickup-type-item-rest.active').xpath("./time/@datetime").get().strip()
+        next_papier_raw = response.css('.avk-block-row.pickup-type-item-papier.active').xpath("./time/@datetime").get().strip()
         self.logger.debug('GFT? %s Rest? %s papier? %s', next_gft_raw, next_rest_raw, next_papier_raw)
 
-        return IradoNextCollectionDates(parse_dutch_date(next_gft_raw),
-                                        parse_dutch_date(next_rest_raw),
-                                        parse_dutch_date(next_papier_raw))
+        return IradoNextCollectionDates(date.fromisoformat(next_gft_raw),
+                                        date.fromisoformat(next_rest_raw),
+                                        date.fromisoformat(next_papier_raw))
 
 
